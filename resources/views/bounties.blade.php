@@ -8,8 +8,10 @@
                             class="w-full h-48 object-cover rounded">
                     
                     <h2 class="mt-2 text-base font-semibold truncate">
-                        {{ $bounty->beatmap_title }}
-                        <span class="text-xs text-gray-400 font-normal">by: {{ $bounty->artist }}</span>
+                        <span class="flex items-center space-x-3 overflow-hidden">
+                            <span class="truncate">{{ $bounty->beatmap_title }}</span>
+                            <span class="text-xs text-gray-400 font-normal whitespace-nowrap">by: {{ $bounty->artist }}</span>
+                        </span>
                     </h2>
                     
                     <dl class="text-sm space-y-1 mt-1">
