@@ -13,6 +13,10 @@ Route::get('/bounties', [App\Http\Controllers\BountiesController::class, 'index'
     ->middleware(['auth', 'verified'])
     ->name('bounties');
 
+Route::get('/completed-bounties', [App\Http\Controllers\CompletedBountiesController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('completed-bounties');
+
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::delete('/admin/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])

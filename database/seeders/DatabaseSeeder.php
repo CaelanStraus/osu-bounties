@@ -82,5 +82,35 @@ class DatabaseSeeder extends Seeder
         'completed_by' => null,
         'completed_at' => null,
         ]);
+
+        Bounty::factory()->create([        
+        'beatmap_title' => 'Summer Of The Occult',
+        'beatmap_url' => 'https://osu.ppy.sh/beatmapsets/797590#osu/1675085',
+        'artist' => 'Seven Lions',
+        'difficulty' => "Divine Empire Of The Supernatural",
+        'required_mods' => 'DT',
+        'beatmap_image' => 'summer_of_the_occult.png',
+        'description' => '$20 for the first FC https://youtu.be/sbh3rUaK_6E',
+        'donators' => 'Alphabet',
+        'reward' => '$20',
+        'completed' => true,
+        'completed_by' => "mrekk",
+        'completed_at' => "9/28/2020",
+        ]);
+
+        Bounty::factory()->create([        
+        'beatmap_title' => 'Hold Your Colour',
+        'beatmap_url' => 'https://osu.ppy.sh/beatmapsets/702272#osu/1485947 ',
+        'artist' => 'Pendulum',
+        'difficulty' => "Iridescence",
+        'required_mods' => 'DT',    
+        'beatmap_image' => 'hold_your_colour.jpg', 
+        'description' => '$200 for the first FC https://youtu.be/qGtRX9T5Sxc',
+        'donators' => 'Unknown',
+        'reward' => '$200',
+        'completed' => true,
+        'completed_by' => "RyuK",
+        'completed_at' => "8/17/2020",
+        ]);
     }
 }
