@@ -5,6 +5,7 @@ use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminRequestsController;
+use App\Http\Controllers\BountyRequestController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,6 +14,14 @@ Route::get('/', function () {
 Route::get('/bounties', [App\Http\Controllers\BountiesController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('bounties');
+
+Route::get('/bounty-request', [BountyRequestController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('bounty-request');
+
+Route::post('/bounty-request', [BountyRequestController::class, 'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('bounty-request.store');
 
 Route::get('/completed-bounties', [App\Http\Controllers\CompletedBountiesController::class, 'index'])
     ->middleware(['auth', 'verified'])

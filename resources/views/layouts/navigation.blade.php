@@ -44,6 +44,10 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link :href="route('bounty-request')">
+                            {{ __('Request a Bounty') }}
+                        </x-dropdown-link>
+
                         @if(Auth::user()->usertype === 'admin')
                         <x-dropdown-link :href="route('admin.dashboard')">
                             {{ __('Admin Dashboard') }}
@@ -107,6 +111,22 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                <x-dropdown-link :href="route('bounty-request')">
+                            {{ __('Request a Bounty') }}
+                        </x-dropdown-link>
+
+                @if(Auth::user()->usertype === 'admin')
+                    <x-dropdown-link :href="route('admin.dashboard')">
+                        {{ __('Admin Dashboard') }}
+                    </x-dropdown-link>
+                    @endif
+
+                    @if(Auth::user()->usertype === 'admin')
+                    <x-dropdown-link :href="route('admin.requests')">
+                        {{ __('Admin Requests') }}
+                    </x-dropdown-link>
+                @endif
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
