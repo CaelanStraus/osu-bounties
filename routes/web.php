@@ -33,6 +33,8 @@ Route::middleware(['admin'])->group(function () {
         ->name('admin.users.destroy');
 
     Route::get('/admin/requests', [AdminRequestsController::class, 'index'])->name('admin.requests');
+    Route::post('/admin/requests', [AdminRequestsController::class, 'store'])->name('admin.requests.store');
+    Route::delete('/admin/requests/{id}', [AdminRequestsController::class, 'destroy'])->name('admin.requests.destroy'); 
 });
 
 Route::middleware('auth')->group(function () {

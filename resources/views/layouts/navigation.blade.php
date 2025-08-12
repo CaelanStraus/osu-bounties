@@ -50,13 +50,13 @@
 
                         @if(Auth::user()->usertype === 'admin')
                         <x-dropdown-link :href="route('admin.dashboard')">
-                            {{ __('Admin Dashboard') }}
+                            {{ __('Admin User Dashboard') }}
                         </x-dropdown-link>
                         @endif
 
                         @if(Auth::user()->usertype === 'admin')
                         <x-dropdown-link :href="route('admin.requests')">
-                            {{ __('Admin Requests') }}
+                            {{ __('Admin Bounty Requests') }}
                         </x-dropdown-link>
                         @endif
 
@@ -118,13 +118,13 @@
 
                 @if(Auth::user()->usertype === 'admin')
                     <x-dropdown-link :href="route('admin.dashboard')">
-                        {{ __('Admin Dashboard') }}
+                        {{ __('Admin User Dashboard') }}
                     </x-dropdown-link>
                     @endif
 
                     @if(Auth::user()->usertype === 'admin')
                     <x-dropdown-link :href="route('admin.requests')">
-                        {{ __('Admin Requests') }}
+                        {{ __('Admin Bounty Requests') }}
                     </x-dropdown-link>
                 @endif
 
