@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request as HttpRequest;
-use App\Models\Request;
+use App\Models\Request as UserRequest;
 use App\Models\Bounty;
 
 class AdminRequestsController extends Controller
 {
     public function index(HttpRequest $request)
     {
-        $requests = Request::all();
+        $requests = UserRequest::all();
 
         $query = Bounty::query();
 
@@ -75,10 +75,58 @@ class AdminRequestsController extends Controller
 
     public function destroyRequest($id)
     {
-        $request = \App\Models\Request::findOrFail($id);
+        $request = UserRequest::findOrFail($id);
         $request->delete();
 
         return redirect()->route('admin.requests')
             ->with('success', 'Request removed successfully!');
+    }
+
+    public function edit($id)
+    {
+        $bounty = Bounty::findOrFail($id);
+        return view('admin.edit-bounty', compact('bounty'));
+    }
+
+    public function update(HttpRequest $request, $id)
+    {
+        $bounty = Bounty::findOrFail($id);
+
+        $request->validate([
+            'beatmap_title'   => 'required|string|max:255',
+            'beatmap_url'     => 'required|url|max:255',
+            'artist'          => 'required|string|max:255',
+            'difficulty'      => 'required|string|max:255',
+            'required_mods'   => 'nullable|string|max:255',
+            'description'     => 'nullable|string|max:1000',
+            'donators'        => 'nullable|string|max:255',
+            'reward'          => 'required|string|max:255',
+            'completed_by'    => 'nullable|string|max:255',
+            'completed_at'    => 'nullable|date',
+            'completed'       => 'nullable|boolean',
+            'beatmap_image'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
+
+        $bounty->fill($request->except(['beatmap_image', 'completed', 'completed_by', 'completed_at']));
+
+        if ($request->has('completed') && $request->completed) {
+            $bounty->completed = 1;
+            $bounty->completed_by = $request->input('completed_by');
+            $bounty->completed_at = $request->input('completed_at');
+        } else {
+            $bounty->completed = 0;
+            $bounty->completed_by = null;
+            $bounty->completed_at = null;
+        }
+
+        if ($request->hasFile('beatmap_image')) {
+            $imageName = time() . '.' . $request->beatmap_image->extension();
+            $request->beatmap_image->move(public_path('images/beatmaps'), $imageName);
+            $bounty->beatmap_image = $imageName;
+        }
+
+        $bounty->save();
+
+        return redirect()->route('admin.requests')->with('success', 'Bounty updated successfully!');
     }
 }

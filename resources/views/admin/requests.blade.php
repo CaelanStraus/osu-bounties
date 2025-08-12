@@ -9,9 +9,7 @@
             </div>
         @endif
 
-        <!-- Top row: Add Bounty + Requests -->
         <div class="flex flex-col md:flex-row md:space-x-8">
-            <!-- Add New Bounty Form -->
             <div class="md:w-1/2 bg-white p-6 rounded-lg shadow mb-8 md:mb-0"
                  x-show="!submitted">
                 <form action="{{ route('admin.requests.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
@@ -61,7 +59,6 @@
                 </form>
             </div>
 
-            <!-- Success message & Add Another button -->
             <div x-show="submitted" x-cloak class="md:w-1/2 bg-white p-6 rounded-lg shadow space-y-4 text-center mb-8 md:mb-0">
                 <p class="text-lg font-medium text-gray-700">Bounty added successfully!</p>
                 <button @click="submitted = false" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow">
@@ -69,7 +66,6 @@
                 </button>
             </div>
 
-            <!-- Existing Requests List -->
             <div class="md:w-1/2">
                 <h2 class="text-xl font-bold mb-4">User Requests</h2>
                 @if($requests->count())
@@ -111,65 +107,84 @@
             </div>
         </div>
 
-        <!-- Bottom row: Bounties List -->
         <div class="mt-12">
-            <!-- Filter form -->
-            <form method="GET" action="{{ route('admin.requests') }}" class="mb-4 flex flex-wrap gap-2">
-                <input type="text" name="title" value="{{ request('title') }}"
-                       placeholder="Filter by title"
-                       class="border border-gray-300 p-2 rounded">
-                <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-                    Apply Filter
-                </button>
-                @if(request()->has('title'))
-                    <a href="{{ route('admin.requests') }}"
-                       class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">
-                        Clear
-                    </a>
-                @endif
-            </form>
+    <form method="GET" action="{{ route('admin.requests') }}" class="mb-4 flex flex-wrap gap-2">
+        <input type="text" name="title" value="{{ request('title') }}"
+               placeholder="Filter by title"
+               class="border border-gray-300 p-2 rounded flex-grow min-w-[150px]">
+        <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+            Apply Filter
+        </button>
+        @if(request()->has('title'))
+            <a href="{{ route('admin.requests') }}"
+               class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">
+                Clear
+            </a>
+        @endif
+    </form>
 
-            @if($bounties->count())
-                <table class="w-full border-collapse border border-gray-300">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="border border-gray-300 p-2">Image</th>
-                            <th class="border border-gray-300 p-2">Title</th>
-                            <th class="border border-gray-300 p-2">Artist</th>
-                            <th class="border border-gray-300 p-2">Difficulty</th>
-                            <th class="border border-gray-300 p-2">Reward</th>
-                            <th class="border border-gray-300 p-2">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($bounties as $bounty)
-                            <tr>
-                                <td class="border border-gray-300 p-2">
-                                    @if($bounty->beatmap_image)
-                                        <img src="{{ asset('images/beatmaps/' . $bounty->beatmap_image) }}" alt="Beatmap Image" class="w-16 h-16 object-cover">
-                                    @endif
-                                </td>
-                                <td class="border border-gray-300 p-2">{{ $bounty->beatmap_title }}</td>
-                                <td class="border border-gray-300 p-2">{{ $bounty->artist }}</td>
-                                <td class="border border-gray-300 p-2">{{ $bounty->difficulty }}</td>
-                                <td class="border border-gray-300 p-2">{{ $bounty->reward }}</td>
-                                <td class="border border-gray-300 p-2">
-                                    <form action="{{ route('admin.requests.destroy', $bounty->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this bounty?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <p class="text-center text-gray-600 mt-4">No bounties found matching your filters.</p>
-            @endif
+    @if($bounties->count())
+        <div class="hidden md:grid grid-cols-[auto_1fr_1fr_auto_auto_auto] gap-4 bg-gray-100 p-3 rounded font-semibold text-gray-700">
+            <div>Image</div>
+            <div>Title</div>
+            <div>Artist</div>
+            <div>Difficulty</div>
+            <div>Reward</div>
+            <div>Actions</div>
         </div>
+
+        @foreach($bounties as $bounty)
+            <div
+                class="grid grid-cols-1 md:grid-cols-[auto_1fr_1fr_auto_auto_auto] gap-4 border border-gray-300 rounded p-3 items-center mb-3 bg-white dark:bg-gray-800"
+            >
+                <div class="flex justify-center md:justify-start">
+                    @if($bounty->beatmap_image)
+                        <img src="{{ asset('images/beatmaps/' . $bounty->beatmap_image) }}" alt="Beatmap Image" class="w-16 h-16 object-cover rounded">
+                    @else
+                        <div class="w-16 h-16 bg-gray-200 rounded"></div>
+                    @endif
+                </div>
+
+                <div>
+                    <span class="md:hidden font-semibold block mb-1 text-gray-600">Title</span>
+                    {{ $bounty->beatmap_title }}
+                </div>
+
+                <div>
+                    <span class="md:hidden font-semibold block mb-1 text-gray-600">Artist</span>
+                    {{ $bounty->artist }}
+                </div>
+
+                <div>
+                    <span class="md:hidden font-semibold block mb-1 text-gray-600">Difficulty</span>
+                    {{ $bounty->difficulty }}
+                </div>
+
+                <div>
+                    <span class="md:hidden font-semibold block mb-1 text-gray-600">Reward</span>
+                    {{ $bounty->reward }}
+                </div>
+
+                <div class="flex justify-center md:justify-start space-x-2 mt-2 md:mt-0">
+                    <a href="{{ route('admin.requests.edit', $bounty->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
+                        Edit
+                    </a>
+                    <form action="{{ route('admin.requests.destroy', $bounty->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this bounty?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @endforeach
+    @else
+        <p class="text-center text-gray-600 mt-4">No bounties found matching your filters.</p>
+    @endif
+</div>
+
+
     </div>
 </x-app-layout>

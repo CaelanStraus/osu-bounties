@@ -38,6 +38,9 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('/admin/requests/user/{id}', [AdminRequestsController::class, 'destroyRequest'])
     ->name('admin.requests.user.destroy');
 
+    Route::get('/admin/bounties/{id}/edit', [AdminRequestsController::class, 'edit'])->name('admin.requests.edit');
+    Route::put('/admin/bounties/{id}', [AdminRequestsController::class, 'update'])->name('admin.requests.update');
+
 });
 
 Route::middleware('auth')->group(function () {

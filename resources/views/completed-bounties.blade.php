@@ -15,8 +15,6 @@
                         <span class="text-xs text-gray-400 font-normal whitespace-nowrap"> Completed by: {{ $bounty->completed_by }}</span>    
                     </h2>
 
-
-                    
                     <dl class="text-sm space-y-1 mt-1">
                         <div><span class="font-medium">Diff:</span> {{ $bounty->difficulty }}</div>
                         <div><span class="font-medium">Mods:</span> {{ $bounty->required_mods }}</div>
