@@ -16,40 +16,51 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Beatmap URL</label>
-                <input type="url" name="beatmap_url" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('beatmap_url') }}" required>
+                <input type="url" name="beatmap_url" placeholder="https://osu.ppy.sh/beatmapsets/41823#osu/131891" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('beatmap_url') }}" required>
                 @error('beatmap_url') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
-                <input type="text" name="difficulty" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('difficulty') }}" required>
+                <input type="text" name="difficulty" placeholder="WHO'S AFRAID OF THE BIG BLACK" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('difficulty') }}" required>
                 @error('difficulty') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Required Mods</label>
-                <input type="text" name="required_mods" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('required_mods', 'NM') }}">
+                <input type="text" name="required_mods" placeholder="DTHDHR, NM, any" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('required_mods') }}">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea name="description" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="3">{{ old('description') }}</textarea>
+                <textarea name="description" placeholder="DT FC, good luck lmao :)" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="3">{{ old('description') }}</textarea>
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Donators</label>
-                <input type="text" name="donators" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('donators', 'Anonymous') }}">
+                <input type="text" name="donators" placeholder="Anonymous, BMC" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('donators') }}">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Reward</label>
-                <input type="text" name="reward" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('reward') }}" required>
+                <input type="text" name="reward" placeholder="$100, 2 months of supporter, a signed T-shirt" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('reward') }}" required>
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Contact Info</label>
-                <input type="text" name="contact_info" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('contact_info') }}" required>
-            </div>
+            <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
+                Contact Info
+                <span class="relative group cursor-help">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4m0-4h.01"/>
+                    </svg>
+                    <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">
+                            Please put your Discord handle or your email so we can contact you about your request.
+                    </div>
+                </span>
+            </label>
+            <input type="text" name="contact_info" placeholder="john.smith@mail.com" class="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="{{ old('contact_info') }}" required>
+        </div>
 
             <div class="flex justify-end">
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">

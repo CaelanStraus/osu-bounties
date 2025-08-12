@@ -35,6 +35,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/requests', [AdminRequestsController::class, 'index'])->name('admin.requests');
     Route::post('/admin/requests', [AdminRequestsController::class, 'store'])->name('admin.requests.store');
     Route::delete('/admin/requests/{id}', [AdminRequestsController::class, 'destroy'])->name('admin.requests.destroy'); 
+    Route::delete('/admin/requests/user/{id}', [AdminRequestsController::class, 'destroyRequest'])
+    ->name('admin.requests.user.destroy');
+
 });
 
 Route::middleware('auth')->group(function () {

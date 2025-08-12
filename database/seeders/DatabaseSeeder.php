@@ -14,14 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-
+        
         User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@ehb.be',
             'password' => 'Password!321',
             'usertype' => 'admin',
         ]);
+
+        User::factory(10)->create();
 
         Bounty::factory()->create([        
         'beatmap_title' => 'Sound Chimera',
