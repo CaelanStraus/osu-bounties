@@ -9,6 +9,25 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string',
+            'usertype' => 'required|in:admin,user',
+        ]);
+
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'usertype' => $validated['usertype'],
+        ]);
+
+        return redirect()->back()->with('success', 'User created successfully.');
+    }
+
     public function destroy(User $user)
     {
         if ($user->usertype === 'admin') {

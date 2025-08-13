@@ -37,6 +37,7 @@ Route::get('/completed-bounties', [CompletedBountiesController::class, 'index'])
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
     Route::patch('/admin/users/{user}/toggle-role', [UserController::class, 'toggleRole'])->name('admin.users.toggleRole');
 

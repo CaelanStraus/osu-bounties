@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@ehb.be',
             'password' => 'Password!321',
             'usertype' => 'admin',
+            'profile_picture' => null,
+            'about_me' => 'null',
+            'dob' => 'null',
         ]);
 
         User::factory(10)->create();
