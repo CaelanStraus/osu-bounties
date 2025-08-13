@@ -17,7 +17,7 @@
                 placeholder="Filter by email"
                 class="border border-gray-300 p-2 rounded min-w-[150px]"
             />
-            <select name="usertype" class="border border-gray-300 p-2 rounded">
+            <select name="usertype" class="border border-gray-300 p-2 rounded"> 
                 <option value="">All User Types</option>
                 <option value="admin" {{ request('usertype') === 'admin' ? 'selected' : '' }}>Admin</option>
                 <option value="user" {{ request('usertype') === 'user' ? 'selected' : '' }}>User</option>
@@ -32,45 +32,49 @@
             @endif
         </form>
 
-        @if($users->count())
-            <div class="hidden md:grid grid-cols-[auto_1fr_1fr_auto_auto] gap-4 bg-gray-100 p-3 rounded font-semibold text-gray-700">
-                <div>ID</div>
-                <div>Name</div>
-                <div>Email</div>
-                <div>Usertype</div>
-                <div>Actions</div>
-            </div>
-
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             @foreach($users as $user)
-                <div
-                    class="grid grid-cols-1 md:grid-cols-[auto_1fr_1fr_auto_auto] gap-4 border border-gray-300 rounded p-3 items-center mb-3 bg-white"
-                >
-                    <div>
-                        <span class="md:hidden font-semibold block mb-1 text-gray-600">ID</span>
-                        {{ $user->id }}
+                <div class="border border-gray-300 rounded p-4 bg-white shadow-sm flex flex-col justify-between overflow-hidden h-full">
+                    <div class="mb-4 break-words">
+                        <div class="mb-2">
+                            <span class="font-semibold text-gray-600">ID:</span>
+                            {{ $user->id }}
+                        </div>
+                        <div class="mb-2">
+                            <span class="font-semibold text-gray-600">Name:</span>
+                            <a href="{{ route('user.profile', $user->name) }}" class="text-blue-600 hover:underline">
+                                {{ $user->name }}
+                            </a>
+                        </div>
+                        <div class="mb-2">
+                            <span class="font-semibold text-gray-600">Email:</span>
+                            {{ $user->email }}
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-600">Usertype:</span>
+                            {{ $user->usertype }}
+                        </div>
                     </div>
 
-                    <div>
-                        <span class="md:hidden font-semibold block mb-1 text-gray-600">Name</span>
-                        {{ $user->name }}
-                    </div>
+                    <div class="flex flex-wrap gap-2 justify-center mt-auto">
+                        @if($user->id !== auth()->id())
+                            <form action="{{ route('admin.users.toggleRole', $user->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit"
+                                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded shadow text-xs">
+                                    {{ $user->usertype === 'admin' ? 'Demote to User' : 'Promote to Admin' }}
+                                </button>
+                            </form>
+                        @endif
 
-                    <div>
-                        <span class="md:hidden font-semibold block mb-1 text-gray-600">Email</span>
-                        {{ $user->email }}
-                    </div>
-
-                    <div>
-                        <span class="md:hidden font-semibold block mb-1 text-gray-600">Usertype</span>
-                        {{ $user->usertype }}
-                    </div>
-
-                    <div class="flex justify-center md:justify-start">
                         @if($user->usertype !== 'admin')
-                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this user?');">
+                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                    onsubmit="return confirm('Are you sure you want to remove this user?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow text-xs">
+                                <button type="submit"
+                                    class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow text-xs">
                                     Remove
                                 </button>
                             </form>
@@ -78,8 +82,6 @@
                     </div>
                 </div>
             @endforeach
-        @else
-            <p class="text-center text-gray-600 mt-4">No users found.</p>
-        @endif
+        </div>
     </div>
 </x-app-layout>

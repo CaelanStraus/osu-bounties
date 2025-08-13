@@ -1,67 +1,52 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<x-app-layout>
+    <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0 mb-8 mt-8">
+        <main class="flex w-full flex-col-reverse lg:flex-row justify-center items-center">
+            <iframe
+                style="width:75vw; height:75vh;"
+                class="rounded-lg shadow-lg"
+                src="https://www.youtube.com/embed/0V5GwzmMhpU"
+                allowfullscreen
+            ></iframe>
+        </main>
+    </div>
 
-    <title>Laravel</title>
+    <div class="w-full max-w-lg mx-auto mb-8">
+        <form method="GET" action="{{ url('/') }}" class="flex">
+            <input
+                type="text"
+                name="name"
+                value="{{ request('name') }}"
+                placeholder="Search users by name"
+                class="flex-grow border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                autocomplete="off"
+            />
+            <button
+                type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white rounded-r px-4 py-2"
+            >
+                Search
+            </button>
+        </form>
+    </div>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
-    <!-- Styles / Scripts -->
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @endif
-
-    @auth
-        <script>
-            window.location.href = "{{ url('/bounties') }}";
-        </script>
-    @endauth
-</head>
-<body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-
-<header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-    @if (Route::has('login'))
-        <nav class="flex items-center justify-end gap-4">
-            @auth
-                {{-- (Optional) Links for logged-in users could go here --}}
-            @else
-                <a
-                    href="{{ route('login') }}"
-                    class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
-                >
-                    Log in
-                </a>
-
-                @if (Route::has('register'))
+    @if(request('name'))
+        @if(isset($users) && $users->count())
+            <div class="w-full max-w-4xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                @foreach($users as $user)
                     <a
-                        href="{{ route('register') }}"
-                        class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
+                        href="{{ url('/user/' . $user->name) }}"
+                        class="block border border-gray-300 rounded p-4 bg-white shadow hover:shadow-md transition-shadow duration-200"
                     >
-                        Register
+                        <div class="font-semibold text-lg text-gray-800 truncate">{{ $user->name }}</div>
+                        <div class="text-gray-600 truncate">{{ $user->email }}</div>
+                        <div class="text-sm text-gray-500">Usertype: {{ $user->usertype }}</div>
                     </a>
-                @endif
-            @endauth
-        </nav>
+                @endforeach
+            </div>
+        @else
+            <p class="text-gray-600 mt-6 max-w-lg mx-auto text-center">
+                No users found matching "{{ request('name') }}"
+            </p>
+        @endif
     @endif
-</header>
-
-<div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-    <main class="flex w-full flex-col-reverse lg:flex-row justify-center items-center">
-        <iframe
-            style="width:75vw; height:75vh;"
-            class="rounded-lg shadow-lg"
-            src="https://www.youtube.com/embed/0V5GwzmMhpU"
-        ></iframe>
-    </main>
-</div>
-
-@if (Route::has('login'))
-    <div class="h-14.5 hidden lg:block"></div>
-@endif
-
-</body>
-</html>
+</x-app-layout>
