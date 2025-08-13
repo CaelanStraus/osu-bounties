@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request as HttpRequest;
 use App\Models\Request as UserRequest;
 use App\Models\Bounty;
