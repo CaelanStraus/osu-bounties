@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request as HttpRequest;
-use App\Models\Request as UserRequest;
 use App\Models\Bounty;
+use App\Models\ClaimedBounty;
+use App\Http\Controllers\Controller;
+use App\Models\Request as UserRequest;
+use Illuminate\Http\Request as HttpRequest;
 
 class AdminRequestsController extends Controller
 {
@@ -29,7 +30,9 @@ class AdminRequestsController extends Controller
 
         $bounties = $query->get();
 
-        return view('admin.requests', compact('bounties', 'requests'));
+        $claimedBounties = ClaimedBounty::with(['bounty', 'user'])->latest()->get();
+
+        return view('admin.requests', compact('bounties', 'requests', 'claimedBounties'));
     }
 
     public function store(HttpRequest $request)

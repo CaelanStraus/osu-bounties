@@ -31,20 +31,17 @@ class ProfileController extends Controller
 
         $data = $request->validated();
 
-        // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
-            // Delete old profile picture if it exists
             if ($user->profile_picture && file_exists(public_path('images/profiles/' . $user->profile_picture))) {
                 unlink(public_path('images/profiles/' . $user->profile_picture));
             }
 
             $image = $request->file('profile_picture');
             $extension = $image->getClientOriginalExtension();
-            $filename = $user->id . '.' . $extension; // user ID as filename
+            $filename = $user->id . '.' . $extension;
 
             $image->move(public_path('images/profiles'), $filename);
 
-            // Store only the filename in DB
             $data['profile_picture'] = $filename;
         }
 

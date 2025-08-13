@@ -27,7 +27,7 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'about_me' => ['nullable', 'string', 'max:1000'],
             'dob' => ['nullable', 'date'],
-            'profile_picture' => ['nullable', 'image', 'max:2048'], // max 2MB
+            'profile_picture' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }

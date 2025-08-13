@@ -4,8 +4,8 @@
             <article class="p-4">
                 <div class="p-4 text-white shadow rounded overflow-hidden h-full flex flex-col">
                     <img src="{{ asset('images/beatmaps/' . $bounty->beatmap_image) }}" 
-                         alt="Beatmap Image" 
-                         class="w-full h-48 object-cover rounded">
+                        alt="Beatmap Image" 
+                        class="w-full h-48 object-cover rounded">
                     
                     <h2 class="mt-2 text-base font-semibold truncate flex justify-between items-center">
                         <span class="flex items-center space-x-3 overflow-hidden">
@@ -28,7 +28,7 @@
                     
                     <div class="flex gap-2 mt-auto">
                         <a href="{{ $bounty->beatmap_url }}" target="_blank" 
-                           class="flex-grow px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 text-center">
+                        class="flex-grow px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 text-center">
                             View
                         </a>
                     </div>
