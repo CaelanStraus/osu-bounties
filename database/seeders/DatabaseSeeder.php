@@ -20,9 +20,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@ehb.be',
             'password' => 'Password!321',
             'usertype' => 'admin',
-            'profile_picture' => null,
-            'about_me' => 'null',
-            'dob' => 'null',
+            'profile_picture' => '1.jpg',
+            'about_me' => 'I am the admin of this site. I can do anything I want.
+side effects may include bullying Kevin Felix.',
+            'dob' => '2003-05-01',
         ]);
 
         User::factory(10)->create();

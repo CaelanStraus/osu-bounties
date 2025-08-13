@@ -25,6 +25,9 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'about_me' => ['nullable', 'string', 'max:1000'],
+            'dob' => ['nullable', 'date'],
+            'profile_picture' => ['nullable', 'image', 'max:2048'], // max 2MB
         ];
     }
 }
